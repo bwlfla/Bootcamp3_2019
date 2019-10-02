@@ -86,9 +86,19 @@ exports.update = function(req, res) {
 /* Delete a listing */
 exports.delete = function(req, res) {
   var listing = req.listing;
-  Listing.findByIdAndDelete(listing._id);
+  Listing.findByIdAndDelete(listing._id, function(err, del){
+    if(err){
+      console.log(err);
+      res.status(400).send(err);
+    }
+    else{
+      res.json(del);
+      console.log(del);
+    }
 
-  listing.save(function(err) {
+  });
+
+  /*listing.save(function(err) {
   if(err) {
     console.log(err);
     res.status(400).send(err);
@@ -96,7 +106,7 @@ exports.delete = function(req, res) {
     res.json(listing);
     console.log(listing);
     }
-});
+}); */
   /* Add your code to remove the listins */
 
 };
